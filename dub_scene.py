@@ -4,6 +4,10 @@ import json
 import traceback
 import torch
 
+# ============================================================
+# COMPATIBILITY MONKEY-PATCHES FOR MODERN PYTORCH & TRANSFORMERS
+# ============================================================
+
 # 1. Fix para transformers 4.45+ que removeu 'isin_mps_friendly'
 try:
     import transformers.pytorch_utils
@@ -28,7 +32,55 @@ except Exception:
 # 3. Aceitar termos da licenca do Coqui automaticamente
 os.environ["COQUI_TOS_AGREED"] = "1"
 
-# Importar TTS
+# 4. FIX CRITICO: transformers 4.45+ passa attention_mask=None em gpt_inference
+# Isso causava o infame: AttributeError: 'NoneType' object has no attribute 'shape'
+try:
+    from TTS.tts.layers.xtts.gpt_inference import GPT2InferenceModel
+    
+    _orig_gpt2_forward = GPT2InferenceModel.forward
+    def _patched_gpt2_forward(self, *args, **kwargs):
+        # Resolver input_ids
+        input_ids = kwargs.get("input_ids")
+        if input_ids is None and len(args) > 0:
+            input_ids = args[0]
+            
+        # Resolver past_key_values
+        past_key_values = kwargs.get("past_key_values")
+        if past_key_values is None and len(args) > 1:
+            past_key_values = args[1]
+            
+        # Resolver attention_mask
+        attention_mask = kwargs.get("attention_mask")
+        if attention_mask is None and len(args) > 2:
+            attention_mask = args[2]
+            
+        # Se attention_mask for None (mudanca do transformers 4.45+), recriamos a mascara correta
+        if attention_mask is None and input_ids is not None:
+            prefix_len = getattr(self, "cached_prefix_emb", None)
+            prefix_l = prefix_len.shape[1] if prefix_len is not None else 0
+            if past_key_values is not None and len(past_key_values) > 0:
+                past_len = past_key_values[0][0].shape[-2]
+                total_len = prefix_l + past_len + input_ids.shape[1]
+            else:
+                total_len = input_ids.shape[1]
+                
+            mask = torch.ones((input_ids.shape[0], total_len), dtype=torch.long, device=input_ids.device)
+            kwargs["attention_mask"] = mask
+            if len(args) > 2:
+                args = list(args)
+                args[2] = mask
+                args = tuple(args)
+                
+        return _orig_gpt2_forward(self, *args, **kwargs)
+        
+    GPT2InferenceModel.forward = _patched_gpt2_forward
+    print("Patch de atencao do transformers aplicado com sucesso!")
+except Exception as e:
+    print(f"Aviso ao aplicar patch do GPT2InferenceModel: {e}")
+
+# ============================================================
+# INICIO DA SINTESE DE VOZ
+# ============================================================
 from TTS.api import TTS
 
 print("=" * 60)
