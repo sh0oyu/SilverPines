@@ -18,8 +18,8 @@ if device == "cpu":
 
 print("Carregando modelo XTTS-v2...")
 tts = TTS(model_name="tts_models/multilingual/multi-dataset/xtts_v2").to(device)
-print("Modelo carregado com sucesso!
-")
+print("Modelo carregado com sucesso!")
+print()
 
 out_dir = "output_dublagem"
 os.makedirs(out_dir, exist_ok=True)
@@ -27,8 +27,8 @@ os.makedirs(out_dir, exist_ok=True)
 with open("scene_dialogue.json", "r", encoding="utf-8") as f:
     dialogues = json.load(f)
 
-print(f"Total de falas na cena: {len(dialogues)}
-")
+print(f"Total de falas na cena: {len(dialogues)}")
+print()
 
 for idx, item in enumerate(dialogues, 1):
     line_id = item["id"]
@@ -47,8 +47,8 @@ for idx, item in enumerate(dialogues, 1):
         file_path=out_file,
         speed=1.0
     )
-    print(f"  -> Gerado: {out_file}
-")
+    print(f"  -> Gerado: {out_file}")
+    print()
 
 print("=" * 60)
 print("CONCLUIDO! Todas as falas foram sintetizadas.")
