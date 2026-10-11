@@ -50,7 +50,7 @@
   {
     "id": "09_velho",
     "character": "O Velho",
-    "references": "references/marcio_simoes_ref.wav",
+    "speaker_ref": "references/marcio_simoes_ref.wav",
     "text": "É um cara durão. Um cara durão e nervosinho."
   },
   {
