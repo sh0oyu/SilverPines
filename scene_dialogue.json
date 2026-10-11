@@ -1,0 +1,116 @@
+[
+  {
+    "id": "01_velho",
+    "character": "O Velho",
+    "speaker_ref": "references/marcio_simoes_ref.wav",
+    "text": "Essa área é restrita."
+  },
+  {
+    "id": "02_walker",
+    "character": "Red Walker",
+    "speaker_ref": "references/gutemberg_walker_ref.wav",
+    "text": "Eu não sabia. Achei que o prédio todo estava condenado."
+  },
+  {
+    "id": "03_velho",
+    "character": "O Velho",
+    "speaker_ref": "references/marcio_simoes_ref.wav",
+    "text": "Não brinque comigo. Sei que você está aprontando alguma. Você é esquizofrênico, moleque? Não bate bem da cabeça?"
+  },
+  {
+    "id": "04_walker",
+    "character": "Red Walker",
+    "speaker_ref": "references/gutemberg_walker_ref.wav",
+    "text": "O quê?"
+  },
+  {
+    "id": "05_velho",
+    "character": "O Velho",
+    "speaker_ref": "references/marcio_simoes_ref.wav",
+    "text": "Sei que você está aprontando alguma coisa. Tem culpa no cartório. Vou descobrir o que é... e quando descobrir, você vai pagar."
+  },
+  {
+    "id": "06_walker",
+    "character": "Red Walker",
+    "speaker_ref": "references/gutemberg_walker_ref.wav",
+    "text": "Só estou procurando o Eddie Velvet. Não me importa o que você pensa. Tenho um trabalho a fazer e, nesse momento, você está no meu caminho."
+  },
+  {
+    "id": "07_velho",
+    "character": "O Velho",
+    "speaker_ref": "references/marcio_simoes_ref.wav",
+    "text": "Ah, é? E vai fazer o quê? Hein? Vai ficar nervosinho? Vai... fazer alguma coisa? Mal posso esperar que você tente, moleque. Estou ansioso por isso."
+  },
+  {
+    "id": "08_walker",
+    "character": "Red Walker",
+    "speaker_ref": "references/gutemberg_walker_ref.wav",
+    "text": "Você está com merda até o pescoço e não tem saída, não é?"
+  },
+  {
+    "id": "09_velho",
+    "character": "O Velho",
+    "references": "references/marcio_simoes_ref.wav",
+    "text": "É um cara durão. Um cara durão e nervosinho."
+  },
+  {
+    "id": "10_walker",
+    "character": "Red Walker",
+    "speaker_ref": "references/gutemberg_walker_ref.wav",
+    "text": "Sai da minha frente, porra."
+  },
+  {
+    "id": "11_velho",
+    "character": "O Velho",
+    "speaker_ref": "references/marcio_simoes_ref.wav",
+    "text": "Estou de olho em você. Irai-vos, e não pequeis. Não se ponha o sol sobre a vossa ira. Não deis lugar ao diabo. Você não é um homem religioso, é?"
+  },
+  {
+    "id": "12_velho",
+    "character": "O Velho",
+    "speaker_ref": "references/marcio_simoes_ref.wav",
+    "text": "Eu também não."
+  },
+  {
+    "id": "13_walker",
+    "character": "Red Walker",
+    "speaker_ref": "references/gutemberg_walker_ref.wav",
+    "text": "Qual é o seu problema? O que você quer?"
+  },
+  {
+    "id": "14_velho",
+    "character": "O Velho",
+    "speaker_ref": "references/marcio_simoes_ref.wav",
+    "text": "Quero você fora de Silver Pines."
+  },
+  {
+    "id": "15_walker",
+    "character": "Red Walker",
+    "speaker_ref": "references/gutemberg_walker_ref.wav",
+    "text": "Bom, eu não vou embora até encontrar o Eddie Velvet. É isso, né? É por isso que você está no meu cangote desde que eu cheguei aqui... Você também está procurando por ele."
+  },
+  {
+    "id": "16_velho",
+    "character": "O Velho",
+    "speaker_ref": "references/marcio_simoes_ref.wav",
+    "text": "Ha! Você não sabe como achar ele, então quer que eu faça todo o trabalho sujo."
+  },
+  {
+    "id": "17_walker",
+    "character": "Red Walker",
+    "speaker_ref": "references/gutemberg_walker_ref.wav",
+    "text": "Acredite no que você quiser."
+  },
+  {
+    "id": "18_velho",
+    "character": "O Velho",
+    "speaker_ref": "references/marcio_simoes_ref.wav",
+    "text": "Acha que vai conseguir tirar ele de mim, moleque? Você acha que é capaz?"
+  },
+  {
+    "id": "19_walker",
+    "character": "Red Walker",
+    "speaker_ref": "references/gutemberg_walker_ref.wav",
+    "text": "Vamos descobrir, não vamos? Tenta a sorte."
+  }
+]
