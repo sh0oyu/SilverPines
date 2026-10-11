@@ -2,6 +2,25 @@ import os
 import json
 import torch
 
+# Fix for PyTorch 2.6+ weights_only=True default on Google Colab
+_orig_torch_load = torch.load
+def _safe_torch_load(*args, **kwargs):
+    kwargs["weights_only"] = False
+    return _orig_torch_load(*args, **kwargs)
+torch.load = _safe_torch_load
+
+try:
+    from TTS.tts.configs.xtts_config import XttsConfig
+    torch.serialization.add_safe_globals([XttsConfig])
+except Exception:
+    pass
+
+try:
+    from TTS.config.shared_configs import BaseDatasetConfig
+    torch.serialization.add_safe_globals([BaseDatasetConfig])
+except Exception:
+    pass
+
 # Aceitar termos da licenca do Coqui automaticamente
 os.environ["COQUI_TOS_AGREED"] = "1"
 
@@ -30,6 +49,7 @@ with open("scene_dialogue.json", "r", encoding="utf-8") as f:
 print(f"Total de falas na cena: {len(dialogues)}")
 print()
 
+sucessos = 0
 for idx, item in enumerate(dialogues, 1):
     line_id = item["id"]
     char = item["character"]
@@ -40,16 +60,20 @@ for idx, item in enumerate(dialogues, 1):
     print(f"[{idx}/{len(dialogues)}] Sintetizando {char}:")
     print(f"  FALA: \"{text}\"")
     
-    tts.tts_to_file(
-        text=text,
-        speaker_wav=speaker_ref,
-        language="pt",
-        file_path=out_file,
-        speed=1.0
-    )
-    print(f"  -> Gerado: {out_file}")
+    try:
+        tts.tts_to_file(
+            text=text,
+            speaker_wav=speaker_ref,
+            language="pt",
+            file_path=out_file,
+            speed=1.0
+        )
+        print(f"  -> Gerado com sucesso: {out_file}")
+        sucessos += 1
+    except Exception as e:
+        print(f"  ERRO ao gerar fala {line_id}: {e}")
     print()
 
 print("=" * 60)
-print("CONCLUIDO! Todas as falas foram sintetizadas.")
+print(f"CONCLUIDO! {sucessos}/{len(dialogues)} falas foram sintetizadas.")
 print("=" * 60)
