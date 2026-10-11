@@ -1,29 +1,27 @@
 import os
+import sys
 import json
 import torch
 
-# Fix for PyTorch 2.6+ weights_only=True default on Google Colab
+# 1. Fix para transformers 4.45+ que removeu 'isin_mps_friendly'
+try:
+    import transformers.pytorch_utils
+    if not hasattr(transformers.pytorch_utils, "isin_mps_friendly"):
+        transformers.pytorch_utils.isin_mps_friendly = torch.isin
+except Exception:
+    pass
+
+# 2. Fix para PyTorch 2.6+ weights_only=True padrao no Colab
 _orig_torch_load = torch.load
 def _safe_torch_load(*args, **kwargs):
     kwargs["weights_only"] = False
     return _orig_torch_load(*args, **kwargs)
 torch.load = _safe_torch_load
 
-try:
-    from TTS.tts.configs.xtts_config import XttsConfig
-    torch.serialization.add_safe_globals([XttsConfig])
-except Exception:
-    pass
-
-try:
-    from TTS.config.shared_configs import BaseDatasetConfig
-    torch.serialization.add_safe_globals([BaseDatasetConfig])
-except Exception:
-    pass
-
-# Aceitar termos da licenca do Coqui automaticamente
+# 3. Aceitar termos da licenca do Coqui automaticamente
 os.environ["COQUI_TOS_AGREED"] = "1"
 
+# Agora importar TTS
 from TTS.api import TTS
 
 print("=" * 60)
@@ -37,8 +35,7 @@ if device == "cpu":
 
 print("Carregando modelo XTTS-v2...")
 tts = TTS(model_name="tts_models/multilingual/multi-dataset/xtts_v2").to(device)
-print("Modelo carregado com sucesso!")
-print()
+print("Modelo carregado com sucesso!\n")
 
 out_dir = "output_dublagem"
 os.makedirs(out_dir, exist_ok=True)
@@ -46,8 +43,7 @@ os.makedirs(out_dir, exist_ok=True)
 with open("scene_dialogue.json", "r", encoding="utf-8") as f:
     dialogues = json.load(f)
 
-print(f"Total de falas na cena: {len(dialogues)}")
-print()
+print(f"Total de falas na cena: {len(dialogues)}\n")
 
 sucessos = 0
 for idx, item in enumerate(dialogues, 1):
